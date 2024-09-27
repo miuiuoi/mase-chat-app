@@ -24,8 +24,8 @@ export default function UserInfo() {
 
   const handleLogout = async () => {
     try {
-        await auth.signOut(); // Gọi phương thức signOut từ Firebase
-        navigate('/chatRoom'); // Điều hướng đến trang đăng nhập
+        await auth.signOut(); 
+        navigate('/chatRoom');
     } catch (error) {
         console.error("Error signing out: ", error);
     }
