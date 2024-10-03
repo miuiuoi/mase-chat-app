@@ -3,7 +3,7 @@ import { Button, Avatar, Typography } from 'antd'
 import styled from 'styled-components';
 import {auth} from "../../firebase/config";
 import { useNavigate } from 'react-router-dom';
-
+import {AuthContext} from "../Provider/AuthProvider"
 
 const WrapperStyled = styled.div`
     display: flex;
@@ -22,6 +22,7 @@ const WrapperStyled = styled.div`
 export default function UserInfo() {
   const navigate = useNavigate();
 
+
   const handleLogout = async () => {
     try {
         await auth.signOut(); 
@@ -31,12 +32,17 @@ export default function UserInfo() {
     }
 };
 
+const {user: {
+    displayName,
+    photoURL
+}}= React.useContext(AuthContext);
+
   return (
     <WrapperStyled >
 
         <div>
-            <Avatar src="">A</Avatar>
-            <Typography.Text className='username'>ABC</Typography.Text>
+            <Avatar src={photoURL}>{photoURL ? '' : displayName?.charAt(0)?.toUpperCase()}</Avatar>
+            <Typography.Text className='username'>{displayName}</Typography.Text>
         </div>
         <Button onClick={handleLogout}>Log out</Button>
 

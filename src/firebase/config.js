@@ -1,7 +1,8 @@
 import { initializeApp } from "firebase/app";
 // import { getAnalytics } from "firebase/analytics";
-import { getAuth } from "firebase/auth"; 
-import { getFirestore } from "firebase/firestore"; 
+import { getAuth, connectAuthEmulator } from "firebase/auth"; 
+import { getFirestore, connectFirestoreEmulator } from "firebase/firestore"; 
+
 
 
 // Your web app's Firebase configuration
@@ -19,8 +20,16 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 // const analytics = getAnalytics(app);
 
+
+
 const auth = getAuth(app); 
 const db = getFirestore(app);
+if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
+  if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
+    connectAuthEmulator(auth, 'http://127.0.0.1:9099/');
+    connectFirestoreEmulator(db, '127.0.0.1', 8080);
+  }
+}
 
 export { db, auth }; 
 // export default app; 
