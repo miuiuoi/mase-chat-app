@@ -33,7 +33,7 @@ export default function AuthProvider({ children }) { // Destructure children
 
     return (
         <AuthContext.Provider value={{ user }}>
-            {isLoading ? <Spin /> : children} {/* Sửa lại cú pháp */}
+            {isLoading ? <Spin style={{ position: 'fixed', inset: 0 }}/> : children} {/* Sửa lại cú pháp */}
         </AuthContext.Provider>
     );
 }

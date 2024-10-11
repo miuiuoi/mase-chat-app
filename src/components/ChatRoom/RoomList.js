@@ -1,10 +1,11 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { Collapse, Typography } from 'antd'
 import styled from 'styled-components'
 import { Button } from 'antd'
 import {PlusSquareOutlined} from "@ant-design/icons"
 import useFirestore from '../../hooks/useFirestore'
 import { AuthContext } from '../Provider/AuthProvider'
+import {AppContext} from "../Provider/AppProvider"
 
 const {Panel} = Collapse
 const PanelStyled = styled(Panel)`
@@ -31,31 +32,26 @@ const LinkStyled = styled(Typography.Link)`
 `
 
 export default function RoomList() {
-    const {user: {uid}} = React.useContext(AuthContext);
+    const {rooms,setIsAddRoomVisible} = useContext(AppContext);
 
-    const roomsCondition = React.useMemo(() => {
-        return {
-            fieldName: 'members',
-            operator: 'array-contains',
-            compareValue: uid
-        }
-    }, [uid])
+    
+    // const {user: {uid}} = React.useContext(AuthContext);
+    // console.log({uid});
+    
 
+    // const roomsCondition = React.useMemo(() => {
+    //     return {
+    //         fieldName: 'members',
+    //         operator: 'array-contains',
+    //         compareValue: uid
+    //     }
+    // }, [uid]);
 
-    /**
-     * {
-     *      name: 'room name'
-     *      description: 'mo ta'
-     *      members: [uid1,uid2,...]
-     * }
-     */
-    const rooms = useFirestore('rooms', roomsCondition);
-    console.log({rooms})
-    console.log({roomsCondition});
-    
-    
-    
-    
+    // const rooms = useFirestore('rooms', roomsCondition)
+
+    const handleAddRoom = () => {
+        setIsAddRoomVisible(true)
+    }
 
   return (
     <Collapse ghost defaultActiveKey={['1']}>
@@ -65,7 +61,7 @@ export default function RoomList() {
             {room.name}
           </LinkStyled>
         ))}
-            <Button className='addRoom' type='text' icon={<PlusSquareOutlined/>}>Thêm Phòng</Button>
+            <Button className='addRoom' type='text' icon={<PlusSquareOutlined/>}  onClick={handleAddRoom}>Thêm Phòng</Button>
         </PanelStyled>
     </Collapse>
   )
