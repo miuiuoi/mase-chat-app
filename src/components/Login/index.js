@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import { FacebookFilled, GoogleOutlined } from '@ant-design/icons';
 import { doc, setDoc, getDoc } from 'firebase/firestore';
 import "../../css/login.css";
+import { addDocument } from '../../firebase/services';
 
 const { Title } = Typography;
 
@@ -21,7 +22,7 @@ export default function Login() {
 
             // Ghi thông tin người dùng vào Firestore
             const userRef = doc(db, 'users', user.uid); // Lấy tham chiếu đến tài liệu
-            await setDoc(userRef, {
+            await addDocument(userRef, {
                 displayName: user.displayName,
                 email: user.email,
                 photoURL: user.photoURL,

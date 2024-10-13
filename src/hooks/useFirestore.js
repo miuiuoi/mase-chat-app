@@ -1,10 +1,11 @@
 import  { useEffect, useState } from "react";
 import { db } from "../firebase/config";
-import { collection, onSnapshot, query, where, orderBy } from 'firebase/firestore';
+import { collection, onSnapshot, query, where, orderBy, addDoc } from 'firebase/firestore';
 
 const useFirestore = (collectionName, condition) => {
     const [users, setUsers] = useState([]);
     const [documents, setDocuments] = useState([]);
+
 
     useEffect(() => {
         const userCollectionRef = collection(db, collectionName); // Sử dụng tên collection từ tham số
