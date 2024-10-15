@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import { FacebookFilled, GoogleOutlined } from '@ant-design/icons';
 import { doc, setDoc, getDoc } from 'firebase/firestore';
 import "../../css/login.css";
-import { addDocument } from '../../firebase/services';
+import { addDocument, generateKeywords } from '../../firebase/services';
 
 const { Title } = Typography;
 
@@ -22,12 +22,14 @@ export default function Login() {
 
             // Ghi thông tin người dùng vào Firestore
             const userRef = doc(db, 'users', user.uid); // Lấy tham chiếu đến tài liệu
-            await addDocument(userRef, {
+            await setDoc(userRef, {
                 displayName: user.displayName,
                 email: user.email,
                 photoURL: user.photoURL,
                 providerId: user.providerData[0]?.providerId,
+                uid: user.uid,
                 createdAt: new Date(),
+                keywords: generateKeywords(user.displayName?.toLowerCase())
             }, { merge: true }); // Sử dụng merge để không ghi đè dữ liệu cũ
 
             console.log("Thông tin người dùng đã được lưu vào Firestore");
@@ -50,6 +52,7 @@ export default function Login() {
                 photoURL: user.photoURL || '',
                 providerId: user.providerData[0]?.providerId || '',
                 createdAt: new Date(),
+                keywords: generateKeywords(user.displayName)
             }, { merge: true });
 
             console.log("Thông tin người dùng đã được lưu vào Firestore");

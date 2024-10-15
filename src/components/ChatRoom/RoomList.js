@@ -32,7 +32,7 @@ const LinkStyled = styled(Typography.Link)`
 `
 
 export default function RoomList() {
-    const {rooms,setIsAddRoomVisible} = useContext(AppContext);
+    const {rooms,setIsAddRoomVisible,setSelectedRoomId} = useContext(AppContext);
 
     
     // const {user: {uid}} = React.useContext(AuthContext);
@@ -57,7 +57,7 @@ export default function RoomList() {
     <Collapse ghost defaultActiveKey={['1']}>
         <PanelStyled header="Danh sách các phòng" key = '1'>
         {rooms.map(room => (
-          <LinkStyled key={room.id} >
+          <LinkStyled key={room.id}  onClick={() => setSelectedRoomId(room.id)}>
             {room.name}
           </LinkStyled>
         ))}

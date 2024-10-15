@@ -16,6 +16,8 @@ export default function AddRoom() {
     console.log({formData: form.getFieldValue()});
     
     addDocument('rooms', { ...form.getFieldsValue(), members: [uid] });
+
+    form.resetFields();
     setIsAddRoomVisible(false);
 };
 

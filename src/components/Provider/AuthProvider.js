@@ -12,7 +12,6 @@ export default function AuthProvider({ children }) { // Destructure children
 
     useEffect(() => {
         const unsubscribe = auth.onAuthStateChanged((user) => {
-            console.log(user);
             if (user) {
                 const { displayName, email, uid, photoURL } = user;
                 setUser({ displayName, email, uid, photoURL}); // Sửa lại để lưu thông tin người dùng
@@ -20,6 +19,7 @@ export default function AuthProvider({ children }) { // Destructure children
                 navigate('/'); // Điều hướng đến trang chính
                 return;
             } else {
+                setUser({});
                 setIsLoading(false); // Đặt loading thành false nếu không có người dùng
                 navigate('/login'); // Điều hướng đến trang đăng nhập
             }
